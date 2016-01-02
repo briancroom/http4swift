@@ -55,9 +55,13 @@ public struct HTTPServer {
                 return
             }
             let client = accept(socket.underlying, nil, nil)
+            fputs("[Server] Accepted client socket\n", stderr)
+
             defer {
+                fputs("[Server] About to shutdown socket\n", stderr)
                 shutdown(client, Int32(SHUT_RDWR))
                 close(client)
+                fputs("[Server] Closed socket\n", stderr)
             }
             do {
                 let reader = SocketReader(socket: client)

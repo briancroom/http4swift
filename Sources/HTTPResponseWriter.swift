@@ -49,12 +49,15 @@ public class HTTPResponseWriter {
 
         var rest = Int(strlen(bytes))
         while rest > 0 {
+            fputs("[Server] Trying to send \(rest) bytes...", stderr)
             let sent = send(socket, bytes, rest, flags)
+            fputs("actually sent \(sent)\n", stderr)
             if sent < 0 {
                 throw WriterError.GenericError(error: errno)
             }
             rest -= sent
         }
+        fputs("[Server] Done sending\n", stderr)
     }
 
 }
